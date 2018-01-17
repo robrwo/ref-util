@@ -377,6 +377,20 @@ Check for a blessed reference to a reference.
 
     is_blessed_refref( bless \[], $class ); # reference to array reference
 
+=head2 coerce_arrayref($scalar)
+
+    coerce_arrayref( \@array );  # returns \@array
+
+    coerce_arrayref( $var );     # returns [ $var ]
+
+    coerce_arrayref( undef );    # returns [ undef ]
+
+=head2 coerce_hashref($scalar)
+
+    coerce_hashref( \%hash );    # returns \%hash
+
+    coerce_hashref( \@array );   # returns { @array }
+
 =head1 BENCHMARKS
 
 Here is a benchmark comparing similar checks.
