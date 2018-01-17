@@ -40,6 +40,9 @@ our %EXPORT_TAGS = ( 'all' => [qw<
     is_blessed_globref
     is_blessed_formatref
     is_blessed_refref
+
+    coerce_arrayref
+    coerce_hashref
 >] );
 our @EXPORT      = ();
 our @EXPORT_OK   = ( @{ $EXPORT_TAGS{'all'} } );
@@ -241,6 +244,20 @@ sub is_blessed_refref($) {
     Carp::croak("Too many arguments for is_blessed_refref") if @_ > 1;
     defined Scalar::Util::blessed( $_[0] )
         && Scalar::Util::reftype( $_[0] ) eq 'REF';
+}
+
+sub coerce_arrayref($) {
+    Carp::croak("Too many arguments for coerce_arrayref") if @_ > 1;
+    is_arrayref( $_[0] ) ? $_[0] : [ $_[0] ];
+}
+
+sub coerce_hashref($) {
+    Carp::croak("Too many arguments for coerce_hashref") if @_ > 1;
+    is_hashref( $_[0] )
+        ? $_[0]
+        : is_arrayref( $_[0] )
+        ? { @{ $_[0] } }
+        : Carp::croak("Argument is not a hashref or arrayref";
 }
 
 1;
